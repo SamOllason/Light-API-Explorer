@@ -2,6 +2,8 @@
 
 A Next.js demo application showcasing the `@light-faux/sdk` capabilities.
 
+See the live demo [here](https://samollason.github.io/Light-API-Explorer/).
+
 ## Features
 
 - 🔍 **Filter documents** - Use the filter syntax to narrow down results
