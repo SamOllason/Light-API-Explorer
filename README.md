@@ -2,6 +2,8 @@
 
 A small, opinionated product-engineering artifact demonstrating API ergonomics, workflow-first UX, and thoughtful design for finance software.
 
+See the live demo [here](https://samollason.github.io/Light-API-Explorer/).
+
 ## Quick Start
 
 ```bash
