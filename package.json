@@ -1,0 +1,18 @@
+{
+  "name": "light-faux-sdk",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:demo": "pnpm --filter @light-faux/demo dev",
+    "build": "pnpm --filter @light-faux/sdk build",
+    "typecheck": "pnpm -r typecheck"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "packageManager": "pnpm@9.0.0"
+}
