@@ -329,19 +329,19 @@ export default function HomePage() {
   }, [response?.data, getDisplayDoc]);
 
   return (
-    <div className="min-h-screen p-6">
+    <div className="min-h-screen p-3 sm:p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <header className="mb-8">
+        <header className="mb-6 sm:mb-8">
           <div className="flex items-center gap-2 mb-1">
             <span className="px-2 py-0.5 text-xs font-medium rounded bg-primary-100 text-primary-700">
               Learning Tool
             </span>
           </div>
-          <h1 className="text-2xl font-bold text-gray-900">
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
             Light API Explorer
           </h1>
-          <p className="text-gray-600 mt-1">
+          <p className="text-sm sm:text-base text-gray-600 mt-1">
             An interactive demo to understand the{' '}
             <a
               href="https://docs.light.inc/getting-started/introduction"
@@ -352,7 +352,7 @@ export default function HomePage() {
               Light API
             </a>
             {' '}— filters, cursor pagination, and workflow state machines.
-            <span className="text-gray-400 ml-1">(No real API calls—runs entirely in-browser)</span>
+            <span className="hidden sm:inline text-gray-400 ml-1">(No real API calls—runs entirely in-browser)</span>
           </p>
         </header>
 
@@ -360,8 +360,8 @@ export default function HomePage() {
           {/* Left Column: Controls + List */}
           <div className="lg:col-span-2 space-y-6">
             {/* Controls */}
-            <div className="card p-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="card p-3 sm:p-4">
+              <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4">
                 <div>
                   <label className="label">Filter</label>
                   <input

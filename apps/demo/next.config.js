@@ -5,9 +5,9 @@ const nextConfig = {
   // For GitHub Pages static export
   output: 'export',
   
-  // Deploying to https://samollason.github.io/Light-demo-SDK-exploring/
-  basePath: '/Light-demo-SDK-exploring',
-  assetPrefix: '/Light-demo-SDK-exploring/',
+  // Deploying to https://samollason.github.io/Light-API-Explorer/
+  basePath: '/Light-API-Explorer',
+  assetPrefix: '/Light-API-Explorer/',
   
   // Disable image optimization (not supported in static export)
   images: {
