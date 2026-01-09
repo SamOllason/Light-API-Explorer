@@ -150,16 +150,5 @@ You may occasionally see errors due to the simulated failure rate - this is inte
 - **No backward transitions** - State machine is forward-only
 - **422 on invalid moves** - With helpful error messages
 
-These aren't missing features - they're design decisions with reasons.
-
-## Loom Recording Guide (90 seconds or less)
-
-1. Show filter/sort controls > apply a filter
-2. Paginate with cursor > note "More results available"
-3. Select document > advance through workflow states
-4. Click "Intentional" badges > explain trade-offs
-5. Mention: "This is how I think about API design"
-
+These aren't missing features, they're design decisions with reasons.
 ---
-
-Built as a portfolio piece for [Light](https://light.inc) to demonstrate product-engineer thinking.
