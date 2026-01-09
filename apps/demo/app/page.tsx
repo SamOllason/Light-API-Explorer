@@ -355,7 +355,10 @@ export default function HomePage() {
             <span className="hidden sm:inline text-gray-400 ml-1">(No real API calls—runs entirely in-browser)</span>
           </p>
           <p className="text-sm sm:text-base text-gray-600 mt-1">
-            See the GitHub repo [here](https://github.com/SamOllason/Light-API-Explorer)
+            See the GitHub repo{' '}
+            <a href="https://github.com/SamOllason/Light-API-Explorer" target="_blank" rel="noopener noreferrer" className="text-primary-600 hover:text-primary-700 underline underline-offset-2">
+              here
+            </a>
           </p>
         </header>
 
