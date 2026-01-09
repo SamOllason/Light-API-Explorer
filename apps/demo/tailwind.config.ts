@@ -9,17 +9,18 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Pet-shop themed primary palette (warm coral / sea glass)
         primary: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          200: '#bae6fd',
-          300: '#7dd3fc',
-          400: '#38bdf8',
-          500: '#0ea5e9',
-          600: '#0284c7',
-          700: '#0369a1',
-          800: '#075985',
-          900: '#0c4a6e',
+          50: '#fff8f6',
+          100: '#ffece8',
+          200: '#ffd6c9',
+          300: '#ffbfa8',
+          400: '#ff9a78',
+          500: '#ff7a59',
+          600: '#ff623f',
+          700: '#e14f30',
+          800: '#b03b24',
+          900: '#7a2818',
         },
       },
     },

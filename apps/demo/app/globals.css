@@ -4,7 +4,8 @@
 
 @layer base {
   body {
-    @apply bg-gray-50 text-gray-900 antialiased;
+    /* Pet-shop theme: soft warm background and friendly text color */
+    @apply bg-amber-50 text-emerald-900 antialiased;
   }
 }
 
@@ -16,7 +17,7 @@
   }
 
   .btn-primary {
-    @apply btn bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500;
+    @apply btn bg-primary-500 text-white hover:bg-primary-600 focus:ring-primary-400;
   }
 
   .btn-secondary {
@@ -32,23 +33,27 @@
   }
 
   .chip-gray {
-    @apply chip bg-gray-100 text-gray-800;
+    @apply chip bg-amber-100 text-amber-900;
   }
 
   .chip-blue {
-    @apply chip bg-blue-100 text-blue-800;
+    @apply chip bg-sky-100 text-sky-800;
   }
 
   .chip-yellow {
-    @apply chip bg-yellow-100 text-yellow-800;
+    @apply chip bg-amber-100 text-amber-800;
   }
 
   .chip-green {
-    @apply chip bg-green-100 text-green-800;
+    @apply chip bg-emerald-100 text-emerald-800;
   }
 
   .chip-purple {
     @apply chip bg-purple-100 text-purple-800;
+  }
+
+  .chip-red {
+    @apply chip bg-red-100 text-red-800;
   }
 
   .badge {
@@ -84,6 +89,6 @@
   }
 
   .card {
-    @apply bg-white rounded-xl shadow-sm border border-gray-200;
+    @apply bg-white rounded-xl shadow-sm border border-amber-100;
   }
 }

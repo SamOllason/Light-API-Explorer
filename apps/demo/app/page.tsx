@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import {
   LightClient,
-  type AccountingDocument,
+  type InvoicePayable,
   type ListResponse,
   type DocumentStatus,
 } from '@light-faux/sdk';
@@ -88,11 +88,14 @@ const client = new LightClient({
 
 /** Status color mapping */
 const STATUS_COLORS: Record<DocumentStatus, string> = {
+  INIT: 'chip-gray',
   DRAFT: 'chip-gray',
   SUBMITTED: 'chip-blue',
   APPROVED: 'chip-yellow',
   POSTED: 'chip-purple',
   PAID: 'chip-green',
+  DECLINED: 'chip-red',
+  CANCELED: 'chip-gray',
 };
 
 /** Document type labels */
@@ -131,21 +134,21 @@ function WorkflowPanel({
   onAdvance,
   isAdvancing,
 }: {
-  doc: AccountingDocument | null;
+  doc: InvoicePayable | null;
   onAdvance: () => void;
   isAdvancing: boolean;
 }) {
   if (!doc) {
     return (
       <div className="card p-6 h-full flex items-center justify-center text-gray-500">
-        Select a document to view workflow
+        Select a transaction to view workflow
       </div>
     );
   }
 
-  const statuses: DocumentStatus[] = ['DRAFT', 'SUBMITTED', 'APPROVED', 'POSTED', 'PAID'];
-  const currentIndex = statuses.indexOf(doc.status);
-  const isTerminal = doc.status === 'PAID';
+  const statuses: DocumentStatus[] = ['INIT', 'SUBMITTED', 'APPROVED', 'PAID'];
+  const currentIndex = statuses.indexOf(doc.state);
+  const isTerminal = ['PAID', 'DECLINED', 'CANCELED'].includes(doc.state);
 
   return (
     <div className="card p-6 h-full">
@@ -154,30 +157,27 @@ function WorkflowPanel({
       {/* Document Details */}
       <div className="space-y-3 mb-6">
         <div>
-          <span className="text-sm text-gray-500">Document Number</span>
-          <p className="font-medium">{doc.documentNumber}</p>
+          <span className="text-sm text-gray-500">Invoice Number</span>
+          <p className="font-medium">{doc.invoiceNumber}</p>
         </div>
         <div>
           <span className="text-sm text-gray-500">Type</span>
-          <p className="font-medium">{DOC_TYPE_LABELS[doc.documentType]}</p>
+          <p className="font-medium">{doc.type === 'VENDOR_INVOICE' ? 'Vendor Invoice' : 'Reimbursement'}</p>
         </div>
         <div>
-          <span className="text-sm text-gray-500">Business Partner</span>
-          <p className="font-medium">{doc.businessPartnerName}</p>
+          <span className="text-sm text-gray-500">Vendor</span>
+          <p className="font-medium">{doc.vendor.vendorName}</p>
         </div>
         <div>
           <span className="text-sm text-gray-500">Amount</span>
           <p className="font-medium">
-            {formatMoney(
-              doc.totalTransactionAmount.amountInMajors,
-              doc.totalTransactionAmount.currency
-            )}
+            {formatMoney(doc.amount, doc.currency)}
           </p>
         </div>
         <div>
           <span className="text-sm text-gray-500">Current Status</span>
           <p className="mt-1">
-            <StatusChip status={doc.status} />
+            <StatusChip status={doc.state} />
           </p>
         </div>
       </div>
@@ -185,7 +185,7 @@ function WorkflowPanel({
       {/* Status Timeline */}
       <div className="mb-6">
         <h3 className="text-sm font-medium text-gray-700 mb-3">
-          Status Timeline
+          Workflow Timeline
           <DesignBadge noteKey="stateMachine" className="ml-2" />
         </h3>
         <div className="flex items-center space-x-2">
@@ -194,7 +194,7 @@ function WorkflowPanel({
               <div
                 className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium ${
                   index <= currentIndex
-                    ? 'bg-primary-600 text-white'
+                    ? 'bg-primary-500 text-white'
                     : 'bg-gray-200 text-gray-500'
                 }`}
               >
@@ -203,7 +203,7 @@ function WorkflowPanel({
               {index < statuses.length - 1 && (
                 <div
                   className={`w-6 h-0.5 ${
-                    index < currentIndex ? 'bg-primary-600' : 'bg-gray-200'
+                    index < currentIndex ? 'bg-primary-500' : 'bg-gray-200'
                   }`}
                 />
               )}
@@ -213,7 +213,7 @@ function WorkflowPanel({
         <div className="flex justify-between mt-2 text-xs text-gray-500">
           {statuses.map((status) => (
             <span key={status} className="w-8 text-center">
-              {status.slice(0, 3)}
+              {status === 'INIT' ? 'NEW' : status.slice(0, 3)}
             </span>
           ))}
         </div>
@@ -244,21 +244,18 @@ export default function HomePage() {
   const [cursor, setCursor] = useState<string | undefined>(undefined);
 
   // Response and UI state
-  const [response, setResponse] = useState<ListResponse<AccountingDocument> | null>(null);
+  const [response, setResponse] = useState<ListResponse<InvoicePayable> | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [selectedDoc, setSelectedDoc] = useState<AccountingDocument | null>(null);
+  const [selectedDoc, setSelectedDoc] = useState<InvoicePayable | null>(null);
   const [isAdvancing, setIsAdvancing] = useState(false);
 
-  // In-memory store for advanced documents (to track state changes)
-  const [advancedDocs, setAdvancedDocs] = useState<Map<string, AccountingDocument>>(new Map());
-
-  // Fetch documents
+  // Fetch invoice payables
   const fetchDocuments = useCallback(async (newCursor?: string) => {
     setLoading(true);
     setError(null);
     try {
-      const result = await client.accountingDocuments.list({
+      const result = await client.invoicePayables.list({
         filter: filter || undefined,
         sort: sort || undefined,
         limit,
@@ -285,48 +282,26 @@ export default function HomePage() {
     fetchDocuments(undefined);
   };
 
-  // Get document with potential local overrides
-  const getDisplayDoc = useCallback(
-    (doc: AccountingDocument): AccountingDocument => {
-      return advancedDocs.get(doc.id) ?? doc;
-    },
-    [advancedDocs]
-  );
-
-  // Handle advancing document state
+  // Handle advancing document state using real SDK
   const handleAdvance = async () => {
     if (!selectedDoc) return;
 
     setIsAdvancing(true);
     try {
-      // Create in invoicePayables if not exists, then advance
-      const currentDoc = getDisplayDoc(selectedDoc);
+      // Use the real invoicePayables.advance() SDK method
+      const advancedInvoice = await client.invoicePayables.advance(selectedDoc.id);
       
-      // For demo: create a copy and advance locally
-      const statuses: DocumentStatus[] = ['DRAFT', 'SUBMITTED', 'APPROVED', 'POSTED', 'PAID'];
-      const currentIndex = statuses.indexOf(currentDoc.status);
+      // Update the selected document with the new state
+      setSelectedDoc(advancedInvoice);
       
-      if (currentIndex < statuses.length - 1) {
-        const advancedDoc: AccountingDocument = {
-          ...currentDoc,
-          status: statuses[currentIndex + 1],
-          updatedAt: new Date().toISOString(),
-        };
-        
-        setAdvancedDocs((prev) => new Map(prev).set(advancedDoc.id, advancedDoc));
-        setSelectedDoc(advancedDoc);
-      }
+      // Refetch to update the list
+      await fetchDocuments(cursor);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to advance document');
     } finally {
       setIsAdvancing(false);
     }
   };
-
-  // Documents with local overrides applied
-  const displayDocs = useMemo(() => {
-    return response?.data.map(getDisplayDoc) ?? [];
-  }, [response?.data, getDisplayDoc]);
 
   return (
     <div className="min-h-screen p-3 sm:p-6">
@@ -338,21 +313,12 @@ export default function HomePage() {
               Learning Tool
             </span>
           </div>
-          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
-            Light API Explorer
+          <h1 className="text-xl sm:text-2xl font-bold text-amber-900">
+            Pet Shop Ledger
           </h1>
-          <p className="text-sm sm:text-base text-gray-600 mt-1">
-            An interactive demo to understand the{' '}
-            <a
-              href="https://docs.light.inc/getting-started/introduction"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-primary-600 hover:text-primary-700 underline underline-offset-2"
-            >
-              Light API
-            </a>
-            {' '}— filters, cursor pagination, and workflow state machines.
-            <span className="hidden sm:inline text-gray-400 ml-1">(No real API calls—runs entirely in-browser)</span>
+          <p className="text-sm sm:text-base text-amber-800 mt-1">
+            A playful demo for a pet shop's financial flows — filters, cursor pagination, and workflow state machines.
+            <span className="hidden sm:inline text-amber-600 ml-1">(No real pet data—runs entirely in-browser)</span>
           </p>
           <p className="text-sm sm:text-base text-gray-600 mt-1">
             See the GitHub repo{' '}
@@ -387,11 +353,10 @@ export default function HomePage() {
                   >
                     <option value="createdAt:desc">Created (Newest)</option>
                     <option value="createdAt:asc">Created (Oldest)</option>
-                    <option value="documentDate:desc">Doc Date (Newest)</option>
-                    <option value="documentDate:asc">Doc Date (Oldest)</option>
-                    <option value="totalTransactionAmountInMajors:desc">Amount (High-Low)</option>
-                    <option value="totalTransactionAmountInMajors:asc">Amount (Low-High)</option>
-                    <option value="businessPartnerName:asc">Partner (A-Z)</option>
+                    <option value="dueDate:desc">Due Date (Latest)</option>
+                    <option value="dueDate:asc">Due Date (Earliest)</option>
+                    <option value="amount:desc">Amount (High-Low)</option>
+                    <option value="amount:asc">Amount (Low-High)</option>
                   </select>
                 </div>
                 <div>
@@ -418,11 +383,10 @@ export default function HomePage() {
               <div className="mt-3 flex flex-wrap gap-2">
                 <span className="text-xs text-gray-500 self-center">Try:</span>
                 {[
-                  { label: 'Drafts', value: 'status:eq:DRAFT' },
-                  { label: 'Pending', value: 'status:in:DRAFT|SUBMITTED' },
-                  { label: 'High value', value: 'totalTransactionAmountInMajors:gt:5000' },
-                  { label: 'Acme', value: 'businessPartnerName:contains:Acme' },
-                  { label: 'Payables', value: 'documentType:eq:AP' },
+                  { label: 'New', value: 'state:eq:INIT' },
+                  { label: 'Pending', value: 'state:in:INIT|SUBMITTED' },
+                  { label: 'High value', value: 'amount:gt:5000' },
+                  { label: 'Due Soon', value: 'dueDate:lt:2025-02-01' },
                   { label: 'Clear', value: '' },
                 ].map((preset) => (
                   <button
@@ -451,19 +415,19 @@ export default function HomePage() {
             {/* Document List */}
             <div className="card">
               <div className="p-4 border-b border-gray-200">
-                <h2 className="font-semibold text-gray-900">
-                  Accounting Documents
-                  {loading && <span className="ml-2 text-gray-500">(Loading...)</span>}
+                  <h2 className="font-semibold text-amber-900">
+                  Pet Shop Transactions
+                  {loading && <span className="ml-2 text-amber-700">(Loading...)</span>}
                 </h2>
               </div>
 
-              {displayDocs.length === 0 && !loading ? (
+              {(response?.data.length ?? 0) === 0 && !loading ? (
                 <div className="p-8 text-center text-gray-500">
-                  No documents found. Try adjusting your filters.
+                  No invoices found. Try adjusting your filters.
                 </div>
               ) : (
                 <div className="divide-y divide-gray-200">
-                  {displayDocs.map((doc) => (
+                  {response?.data.map((doc) => (
                     <div
                       key={doc.id}
                       onClick={() => setSelectedDoc(doc)}
@@ -474,26 +438,23 @@ export default function HomePage() {
                       <div className="flex items-start justify-between">
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-1">
-                            <span className="font-medium text-gray-900">{doc.documentNumber}</span>
-                            <span className="chip-gray text-xs">{doc.documentType}</span>
-                            <StatusChip status={doc.status} />
+                            <span className="font-medium text-gray-900">{doc.invoiceNumber}</span>
+                            <span className="chip-gray text-xs">{doc.type === 'VENDOR_INVOICE' ? 'Invoice' : 'Reimburse'}</span>
+                            <StatusChip status={doc.state} />
                           </div>
-                          <p className="text-sm text-gray-600 truncate">{doc.businessPartnerName}</p>
+                          <p className="text-sm text-gray-600 truncate">{doc.vendor.vendorName}</p>
                           <p className="text-xs text-gray-500 mt-1">
-                            {formatDate(doc.documentDate)} · {doc.description}
+                            Due: {formatDate(doc.dueDate)} {doc.description && `· ${doc.description}`}
                           </p>
                         </div>
                         <div className="text-right ml-4">
                           <p className="font-medium text-gray-900">
-                            {formatMoney(
-                              doc.totalTransactionAmount.amountInMajors,
-                              doc.totalTransactionAmount.currency
-                            )}
+                            {formatMoney(doc.amount, doc.currency)}
                           </p>
                         </div>
                       </div>
                     </div>
-                  ))}
+                  )) ?? []}
                 </div>
               )}
 
@@ -535,7 +496,7 @@ export default function HomePage() {
           <div className="lg:col-span-1">
             <div className="sticky top-6">
               <WorkflowPanel
-                doc={selectedDoc ? getDisplayDoc(selectedDoc) : null}
+                doc={selectedDoc}
                 onAdvance={handleAdvance}
                 isAdvancing={isAdvancing}
               />

@@ -11,20 +11,34 @@ export type {
   Money,
   AccountingDocument,
   LineItem,
-  
+
   // Request/Response types
   SortSpec,
   FilterSpec,
   ListParams,
   ListResponse,
-  
+
   // Configuration
   ClientConfig,
   CreateAccountingDocumentInput,
+
+  // Invoice Payables (Light API)
+  InvoicePayable,
+  InvoicePayableType,
+  CreateInvoicePayableInput,
+  UpdateInvoicePayableInput,
+  ApproveInvoiceInput,
+  DeclineInvoiceInput,
+  CancelInvoiceInput,
+  DocumentUploadUrl,
+  LinkedCreditNote,
+  Vendor,
+  InvoiceUser,
+  NextApprover,
 } from './types.js';
 
 // Utility exports (for advanced usage)
 export { encodeCursor, decodeCursor, cursorPaginate } from './pagination.js';
 export { parseFilter, parseSort, applyFilters, applySort } from './filters.js';
-export { generateDocuments } from './db.js';
+export { generateDocuments, generateInvoicePayables } from './db.js';
 export { simulateLatency } from './utils/latency.js';

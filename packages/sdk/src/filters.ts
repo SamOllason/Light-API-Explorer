@@ -70,26 +70,28 @@ export function parseFilter(filterStr?: string): FilterSpec[] {
 }
 
 /**
- * Get a nested or computed field value from a document
+ * Get a nested or computed field value from a record
  */
-function getFieldValue(doc: AccountingDocument, field: string): unknown {
-  switch (field) {
-    case 'totalTransactionAmountInMajors':
-      return doc.totalTransactionAmount.amountInMajors;
-    case 'currency':
-      return doc.totalTransactionAmount.currency;
-    default:
-      return (doc as unknown as Record<string, unknown>)[field];
+function getFieldValue(doc: Record<string, any>, field: string): unknown {
+  // Handle nested Money type for AccountingDocument
+  if (field === 'totalTransactionAmountInMajors' && doc.totalTransactionAmount) {
+    return doc.totalTransactionAmount.amountInMajors;
   }
+  if (field === 'currency') {
+    return doc.totalTransactionAmount?.currency ?? doc.currency;
+  }
+  
+  // Direct field access
+  return doc[field];
 }
 
 /**
- * Apply filter specifications to a list of documents
+ * Apply filter specifications to a list of records
  */
-export function applyFilters(
-  items: AccountingDocument[],
+export function applyFilters<T extends Record<string, any>>(
+  items: T[],
   specs: FilterSpec[]
-): AccountingDocument[] {
+): T[] {
   if (specs.length === 0) return items;
 
   return items.filter((item) =>
@@ -141,12 +143,12 @@ function matchesFilter(value: unknown, spec: FilterSpec): boolean {
 }
 
 /**
- * Apply sort specifications to a list of documents
+ * Apply sort specifications to a list of records
  */
-export function applySort(
-  items: AccountingDocument[],
+export function applySort<T extends Record<string, any>>(
+  items: T[],
   specs: SortSpec[]
-): AccountingDocument[] {
+): T[] {
   if (specs.length === 0) return items;
 
   return [...items].sort((a, b) => {

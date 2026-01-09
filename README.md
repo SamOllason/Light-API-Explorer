@@ -1,8 +1,66 @@
+---
+
+## Assumptions for Invoice Payables Demo
+
+To keep this artifact focused and realistic, the following assumptions are made about the Invoice Payables workflow and data model:
+
+- **State Machine:**
+  - INIT → SUBMITTED → APPROVED → PAID (with possible CANCELED/DECLINED)
+  - Allowed transitions:
+    - INIT → SUBMITTED (submit for approval)
+    - SUBMITTED → APPROVED (approve)
+    - SUBMITTED → DECLINED (decline/reject)
+    - APPROVED → PAID (mark as paid)
+    - INIT or SUBMITTED → CANCELED (cancel before approval/payment)
+  - Terminal states: PAID, CANCELED, DECLINED
+
+- **Actions:**
+  - Approve, decline, or cancel are only available in certain states (e.g., can’t approve if already paid).
+  - Only INIT/SUBMITTED can be canceled; only SUBMITTED can be approved/declined.
+
+- **Fields Displayed:**
+  - List view: payee, amount, status, due date, etc.
+  - Detail view: all fields, including audit info (createdAt, updatedAt, approval/cancellation notes, line items).
+
+- **Error Handling:**
+  - Invalid transitions (e.g., approving a PAID invoice) return a 422-style error with a helpful message.
+
+- **Filtering/Sorting:**
+  - Support filtering by state, payee, vendor, due date, amount, etc.
+  - Support sorting by due date, amount, createdAt.
+
+- **Line Items:**
+  - Each invoice payable can have multiple line items (amount, description, tax, account, etc.).
+
+- **Microcopy:**
+  - Calm, human explanations for each state and action, as in the rest of the demo.
+
+If you have access to the real state machine or business rules, it’s easy to adjust! These assumptions are based on standard AP automation patterns and the available API documentation.
+
+---
+
 # Let their be Light! A Light Faux SDK
 
 A small, opinionated product-engineering artifact demonstrating API ergonomics, workflow-first UX, and thoughtful design for finance software. I created this to understand the Light SDK by selecting part of the API functionality.
 
+
 This could evolve into an onboarding tool for new Light team members or new customers.
+
+---
+
+## Why This Demo? (Narrative for Reviewers)
+
+This artifact is intentionally focused and opinionated. Here’s what to notice:
+
+- **Depth over breadth:** Focuses on the hardest, most consequential parts—state transitions, cursor pagination, and error handling—where product and API design matter most.
+- **Real-world finance needs:** Forward-only state machines, cursor-based pagination, and explicit error feedback are about audit trails, reliability, and honest UX.
+- **"Alive" feel:** Simulated latency, deterministic data, and error states make the demo feel real, supporting both developer experience and user empathy.
+- **Teaching by interaction:** The UI and SDK are designed to teach by doing, not just by reading docs.
+- **Tasteful constraints:** Features like totals, offset pagination, and backward transitions are intentionally omitted, with clear explanations—showing product judgment.
+
+> "I built this to show how I think about API and product design, not to cover every feature. Every constraint is intentional—a trade-off for clarity, auditability, or UX. This demo is a conversation starter: it’s small, but designed to teach and provoke discussion about what 'alive' finance software should feel like."
+
+---
 
 See the live demo [here](https://samollason.github.io/Light-API-Explorer/).
 
@@ -15,6 +73,7 @@ pnpm dev:demo
 
 Open http://localhost:3000
 
+
 ## Key Concepts
 
 | Concept | What | Why |
@@ -25,6 +84,7 @@ Open http://localhost:3000
 | **No Total Count** | "More results available" instead of "Page 1 of 47" | `COUNT(*)` is expensive at scale and misleading (changes as you paginate). Honest UX over false precision. |
 | **Simulated Latency** | Configurable `latencyMs` and `failRate` | Feels like a real API. Test loading states and error handling without a backend. |
 | **Deterministic Data** | Seeded PRNG generates consistent mock data | Same seed = same data. Reproducible demos and tests. |
+
 
 ## Project Structure
 
@@ -48,6 +108,7 @@ ARCHITECTURE.md        # Technical architecture details
   copilot-instructions.md   # AI assistant context
 ```
 
+
 ## Design Philosophy
 
 > "Software that feels alive" - Light
@@ -58,6 +119,7 @@ This artifact demonstrates how **UX is downstream of API ergonomics**:
 2. **Cursor over offset** - Stability at scale; "continue where I left off"
 3. **Taste over features** - Small, cohesive, intentional
 
+
 ## Scripts
 
 | Command | Description |
@@ -65,6 +127,7 @@ This artifact demonstrates how **UX is downstream of API ergonomics**:
 | `pnpm dev:demo` | Start the demo app |
 | `pnpm build` | Build the SDK |
 | `pnpm typecheck` | Type check all packages |
+
 
 ## Demo UI Features
 
@@ -76,6 +139,7 @@ The demo is designed to **teach by interaction**:
 | **"Intentional" badges** | Amber badges explain design decisions - click to see why we made specific trade-offs |
 | **Workflow panel** | Select a document > see state machine > advance through states with one click |
 | **Live feedback** | Simulated latency + occasional errors make it feel like a real API |
+
 
 ## Filter Examples
 
@@ -105,6 +169,7 @@ status:eq:DRAFT,documentType:eq:AP
 status:in:DRAFT|SUBMITTED,totalTransactionAmountInMajors:gt:1000
 ```
 
+
 ## Sort Examples
 
 Format: `field:direction`
@@ -115,6 +180,7 @@ documentDate:asc                      # Oldest date first
 totalTransactionAmountInMajors:desc   # Highest amount first
 businessPartnerName:asc               # Alphabetical
 ```
+
 
 ## Workflow States
 
@@ -131,6 +197,7 @@ Each state has accounting consequences:
 - **POSTED** - Recorded in the ledger; affects financial statements
 - **PAID** - Payment completed; cash flow updated
 
+
 ## SDK Configuration
 
 ```typescript
@@ -142,6 +209,7 @@ const client = new LightClient({
 ```
 
 You may occasionally see errors due to the simulated failure rate - this is intentional for testing error handling.
+
 
 ## Sharp Edges (Intentional)
 
