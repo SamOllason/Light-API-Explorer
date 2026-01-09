@@ -33,7 +33,7 @@ const DESIGN_NOTES = {
 } as const;
 
 /** Design decision badge with tooltip */
-function DesignBadge({ noteKey }: { noteKey: keyof typeof DESIGN_NOTES }) {
+function DesignBadge({ noteKey, className = '' }: { noteKey: keyof typeof DESIGN_NOTES; className?: string }) {
   const [isOpen, setIsOpen] = useState(false);
   const note = DESIGN_NOTES[noteKey];
   const tooltipRef = useRef<HTMLDivElement>(null);
@@ -51,10 +51,10 @@ function DesignBadge({ noteKey }: { noteKey: keyof typeof DESIGN_NOTES }) {
   }, [isOpen]);
 
   return (
-    <span className="relative inline-flex ml-2">
+    <span className={`relative inline-flex ${className}`}>
       <button
         onClick={(e) => { e.stopPropagation(); setIsOpen(!isOpen); }}
-        className="inline-flex items-center gap-1 px-1.5 py-0.5 text-xs font-medium rounded bg-amber-100 text-amber-800 hover:bg-amber-200 transition-colors cursor-pointer"
+        className="inline-flex items-center gap-1 px-1.5 py-0.5 text-xs font-medium rounded bg-amber-100 text-amber-800 hover:bg-amber-200 transition-colors cursor-pointer whitespace-nowrap"
         aria-label={`Design note: ${note.title}`}
       >
         <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
@@ -186,7 +186,7 @@ function WorkflowPanel({
       <div className="mb-6">
         <h3 className="text-sm font-medium text-gray-700 mb-3">
           Status Timeline
-          <DesignBadge noteKey="stateMachine" />
+          <DesignBadge noteKey="stateMachine" className="ml-2" />
         </h3>
         <div className="flex items-center space-x-2">
           {statuses.map((status, index) => (
@@ -354,6 +354,9 @@ export default function HomePage() {
             {' '}— filters, cursor pagination, and workflow state machines.
             <span className="hidden sm:inline text-gray-400 ml-1">(No real API calls—runs entirely in-browser)</span>
           </p>
+          <p className="text-sm sm:text-base text-gray-600 mt-1">
+            See the GitHub repo [here](https://github.com/SamOllason/Light-API-Explorer)
+          </p>
         </header>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -493,26 +496,33 @@ export default function HomePage() {
 
               {/* Pagination */}
               {response && (
-                <div className="p-4 border-t border-gray-200 flex items-center justify-between">
-                  <button
-                    onClick={() => fetchDocuments(response.prevCursor ?? undefined)}
-                    disabled={!response.prevCursor || loading}
-                    className="btn-secondary btn-sm"
-                  >
-                    ← Previous
-                  </button>
-                  <span className="text-sm text-gray-600 flex items-center">
-                    {response.hasMore ? 'More results available' : 'End of results'}
-                    <DesignBadge noteKey="cursorPagination" />
-                    <DesignBadge noteKey="noTotal" />
-                  </span>
-                  <button
-                    onClick={() => fetchDocuments(response.nextCursor ?? undefined)}
-                    disabled={!response.nextCursor || loading}
-                    className="btn-secondary btn-sm"
-                  >
-                    Next →
-                  </button>
+                <div className="p-4 border-t border-gray-200">
+                  {/* Mobile: stacked layout */}
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                    <div className="flex items-center justify-between sm:justify-start gap-2 order-2 sm:order-1">
+                      <button
+                        onClick={() => fetchDocuments(response.prevCursor ?? undefined)}
+                        disabled={!response.prevCursor || loading}
+                        className="btn-secondary btn-sm"
+                      >
+                        ← Prev
+                      </button>
+                      <button
+                        onClick={() => fetchDocuments(response.nextCursor ?? undefined)}
+                        disabled={!response.nextCursor || loading}
+                        className="btn-secondary btn-sm"
+                      >
+                        Next →
+                      </button>
+                    </div>
+                    <div className="text-sm text-gray-600 order-1 sm:order-2 text-center sm:text-left">
+                      {response.hasMore ? 'More results available' : 'End of results'}
+                    </div>
+                    <div className="flex items-center justify-center sm:justify-end gap-1 order-3">
+                      <DesignBadge noteKey="cursorPagination" />
+                      <DesignBadge noteKey="noTotal" />
+                    </div>
+                  </div>
                 </div>
               )}
             </div>

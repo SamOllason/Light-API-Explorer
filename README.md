@@ -1,6 +1,8 @@
-# Light Faux SDK
+# Let their be Light! A Light Faux SDK
 
-A small, opinionated product-engineering artifact demonstrating API ergonomics, workflow-first UX, and thoughtful design for finance software.
+A small, opinionated product-engineering artifact demonstrating API ergonomics, workflow-first UX, and thoughtful design for finance software. I created this to understand the Light SDK by selecting part of the API functionality.
+
+This could evolve into an onboarding tool for new Light team members or new customers.
 
 See the live demo [here](https://samollason.github.io/Light-API-Explorer/).
 
@@ -160,4 +162,4 @@ These aren't missing features - they're design decisions with reasons.
 
 ---
 
-Built as a portfolio piece for [Light](https://lightfi.com) to demonstrate product-engineer thinking.
+Built as a portfolio piece for [Light](https://light.inc) to demonstrate product-engineer thinking.
