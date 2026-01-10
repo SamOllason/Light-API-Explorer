@@ -1,0 +1,95 @@
+[
+  {
+    "id": "acc-uk-1000",
+    "companyEntityId": "entity-uk-001",
+    "code": 1000,
+    "label": "Bank GBP",
+    "type": "BANK"
+  },
+  {
+    "id": "acc-uk-4000",
+    "companyEntityId": "entity-uk-001",
+    "code": 4000,
+    "label": "Revenue",
+    "type": "REVENUE"
+  },
+  {
+    "id": "acc-uk-6000",
+    "companyEntityId": "entity-uk-001",
+    "code": 6000,
+    "label": "Operating Expenses",
+    "type": "EXPENSE"
+  },
+  {
+    "id": "acc-uk-1200",
+    "companyEntityId": "entity-uk-001",
+    "code": 1200,
+    "label": "Accounts Receivable",
+    "type": "AR"
+  },
+  {
+    "id": "acc-uk-2000",
+    "companyEntityId": "entity-uk-001",
+    "code": 2000,
+    "label": "Accounts Payable",
+    "type": "AP"
+  },
+  {
+    "id": "acc-uk-1100",
+    "companyEntityId": "entity-uk-001",
+    "code": 1100,
+    "label": "Bank EUR",
+    "type": "BANK",
+    "fxFlag": true
+  },
+  {
+    "id": "acc-us-1000",
+    "companyEntityId": "entity-us-001",
+    "code": 1000,
+    "label": "Bank USD",
+    "type": "BANK"
+  },
+  {
+    "id": "acc-us-4000",
+    "companyEntityId": "entity-us-001",
+    "code": 4000,
+    "label": "Revenue",
+    "type": "REVENUE"
+  },
+  {
+    "id": "acc-us-6000",
+    "companyEntityId": "entity-us-001",
+    "code": 6000,
+    "label": "Operating Expenses",
+    "type": "EXPENSE"
+  },
+  {
+    "id": "acc-de-1000",
+    "companyEntityId": "entity-de-001",
+    "code": 1000,
+    "label": "Bank EUR",
+    "type": "BANK"
+  },
+  {
+    "id": "acc-de-4000",
+    "companyEntityId": "entity-de-001",
+    "code": 4000,
+    "label": "Revenue",
+    "type": "REVENUE"
+  },
+  {
+    "id": "acc-de-6000",
+    "companyEntityId": "entity-de-001",
+    "code": 6000,
+    "label": "Operating Expenses",
+    "type": "EXPENSE"
+  },
+  {
+    "id": "acc-de-1100",
+    "companyEntityId": "entity-de-001",
+    "code": 1100,
+    "label": "Bank USD",
+    "type": "BANK",
+    "fxFlag": true
+  }
+]

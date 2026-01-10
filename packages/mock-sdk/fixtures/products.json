@@ -1,0 +1,20 @@
+[
+  {
+    "id": "prod-001",
+    "name": "Enterprise Software License",
+    "defaultTaxId": "tax-uk-vat20",
+    "defaultLedgerAccountId": "acc-uk-4000"
+  },
+  {
+    "id": "prod-002",
+    "name": "Professional Services - Consulting",
+    "defaultTaxId": "tax-uk-vat20",
+    "defaultLedgerAccountId": "acc-uk-4000"
+  },
+  {
+    "id": "prod-003",
+    "name": "SaaS Subscription - Annual",
+    "defaultTaxId": "tax-us-sales-8",
+    "defaultLedgerAccountId": "acc-us-4000"
+  }
+]

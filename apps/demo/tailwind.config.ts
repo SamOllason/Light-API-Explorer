@@ -9,19 +9,34 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Pet-shop themed primary palette (warm coral / sea glass)
+        // Professional enterprise palette inspired by Light
         primary: {
-          50: '#fff8f6',
-          100: '#ffece8',
-          200: '#ffd6c9',
-          300: '#ffbfa8',
-          400: '#ff9a78',
-          500: '#ff7a59',
-          600: '#ff623f',
-          700: '#e14f30',
-          800: '#b03b24',
-          900: '#7a2818',
+          50: '#f0f9ff',
+          100: '#e0f2fe',
+          200: '#bae6fd',
+          300: '#7dd3fc',
+          400: '#38bdf8',
+          500: '#0ea5e9',
+          600: '#0284c7',
+          700: '#0369a1',
+          800: '#075985',
+          900: '#0c4a6e',
         },
+        gray: {
+          50: '#f9fafb',
+          100: '#f3f4f6',
+          200: '#e5e7eb',
+          300: '#d1d5db',
+          400: '#9ca3af',
+          500: '#6b7280',
+          600: '#4b5563',
+          700: '#374151',
+          800: '#1f2937',
+          900: '#111827',
+        },
+      },
+      fontFamily: {
+        sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
       },
     },
   },

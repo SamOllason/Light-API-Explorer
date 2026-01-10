@@ -1,0 +1,42 @@
+[
+  {
+    "id": "ap-uk-001",
+    "companyEntityId": "entity-uk-001",
+    "state": "INIT",
+    "vendorName": "AWS Europe",
+    "currency": "GBP",
+    "amount": 4500
+  },
+  {
+    "id": "ap-uk-002",
+    "companyEntityId": "entity-uk-001",
+    "state": "INIT",
+    "vendorName": "WeWork UK",
+    "currency": "GBP",
+    "amount": 8200
+  },
+  {
+    "id": "ap-us-001",
+    "companyEntityId": "entity-us-001",
+    "state": "INIT",
+    "vendorName": "Google Cloud",
+    "currency": "USD",
+    "amount": 12400
+  },
+  {
+    "id": "ap-us-002",
+    "companyEntityId": "entity-us-001",
+    "state": "APPROVED",
+    "vendorName": "Staples Inc.",
+    "currency": "USD",
+    "amount": 5400
+  },
+  {
+    "id": "ap-de-001",
+    "companyEntityId": "entity-de-001",
+    "state": "APPROVED",
+    "vendorName": "Deutsche Telekom",
+    "currency": "EUR",
+    "amount": 3200
+  }
+]

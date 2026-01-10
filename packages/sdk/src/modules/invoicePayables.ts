@@ -44,11 +44,11 @@ const ADVANCE_MAP: Partial<Record<DocumentStatus, DocumentStatus>> = {
 /** Terminal states */
 const TERMINAL_STATES: DocumentStatus[] = ['PAID', 'CANCELED', 'DECLINED'];
 
-/** Pet shop company names for demo */
-const PET_SHOP_COMPANIES = [
-  'Paws & Claws Pet Emporium',
-  'Happy Tails Pet Shop',
-  'The Furry Friend Co.',
+/** Professional company names for demo */
+const PROFESSIONAL_COMPANIES = [
+  'Acme Corporation',
+  'Global Tech Solutions',
+  'Strategic Consulting Group',
 ];
 
 /**
@@ -116,7 +116,7 @@ export function createInvoicePayablesModule(config: ClientConfig) {
           vendorName: input.vendorName,
         },
         companyId: `company-${config.seed ?? 1}`,
-        companyEntityName: input.companyEntityName ?? PET_SHOP_COMPANIES[0],
+        companyEntityName: input.companyEntityName ?? PROFESSIONAL_COMPANIES[0],
 
         amount: input.amount,
         currency: input.currency ?? 'USD',

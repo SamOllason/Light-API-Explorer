@@ -1,0 +1,83 @@
+[
+  {
+    "id": "ar-uk-001",
+    "companyEntityId": "entity-uk-001",
+    "state": "DRAFT",
+    "currency": "GBP",
+    "amount": 24500,
+    "lines": [
+      {
+        "id": "ar-uk-001-line-1",
+        "productId": "prod-001",
+        "quantity": 10,
+        "netAmount": 24500
+      }
+    ]
+  },
+  {
+    "id": "ar-uk-002",
+    "companyEntityId": "entity-uk-001",
+    "state": "DRAFT",
+    "currency": "GBP",
+    "amount": 18900,
+    "lines": [
+      {
+        "id": "ar-uk-002-line-1",
+        "productId": "prod-002",
+        "quantity": 5,
+        "netAmount": 18900
+      }
+    ]
+  },
+  {
+    "id": "ar-uk-003",
+    "companyEntityId": "entity-uk-001",
+    "state": "OPEN",
+    "invoiceNumber": "INV-00123",
+    "currency": "GBP",
+    "amount": 12000,
+    "lines": [
+      {
+        "id": "ar-uk-003-line-1",
+        "productId": "prod-001",
+        "accountId": "acc-uk-4000",
+        "taxCodeId": "tax-uk-vat20",
+        "quantity": 5,
+        "netAmount": 12000
+      }
+    ]
+  },
+  {
+    "id": "ar-us-001",
+    "companyEntityId": "entity-us-001",
+    "state": "DRAFT",
+    "currency": "USD",
+    "amount": 32000,
+    "lines": [
+      {
+        "id": "ar-us-001-line-1",
+        "productId": "prod-003",
+        "quantity": 8,
+        "netAmount": 32000
+      }
+    ]
+  },
+  {
+    "id": "ar-de-001",
+    "companyEntityId": "entity-de-001",
+    "state": "OPEN",
+    "invoiceNumber": "DE-INV-00045",
+    "currency": "EUR",
+    "amount": 15600,
+    "lines": [
+      {
+        "id": "ar-de-001-line-1",
+        "productId": "prod-001",
+        "accountId": "acc-de-4000",
+        "taxCodeId": "tax-de-vat19",
+        "quantity": 6,
+        "netAmount": 15600
+      }
+    ]
+  }
+]

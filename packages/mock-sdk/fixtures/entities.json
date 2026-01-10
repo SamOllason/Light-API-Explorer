@@ -1,0 +1,23 @@
+[
+  {
+    "id": "entity-uk-001",
+    "code": "UK-01",
+    "name": "United Kingdom - HQ",
+    "localCurrency": "GBP",
+    "groupCurrency": "USD"
+  },
+  {
+    "id": "entity-us-001",
+    "code": "US-01",
+    "name": "United States - Delaware",
+    "localCurrency": "USD",
+    "groupCurrency": "USD"
+  },
+  {
+    "id": "entity-de-001",
+    "code": "DE-01",
+    "name": "Germany - Berlin",
+    "localCurrency": "EUR",
+    "groupCurrency": "USD"
+  }
+]

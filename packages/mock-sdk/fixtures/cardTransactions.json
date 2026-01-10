@@ -1,0 +1,74 @@
+[
+  {
+    "id": "card-uk-001",
+    "companyEntityId": "entity-uk-001",
+    "merchant": {
+      "name": "Amazon Web Services",
+      "country": "GB",
+      "mcc": "5734"
+    },
+    "currency": "GBP",
+    "amount": 1250,
+    "lines": [
+      {
+        "id": "card-uk-001-line-1",
+        "netAmount": 1250
+      }
+    ]
+  },
+  {
+    "id": "card-uk-002",
+    "companyEntityId": "entity-uk-001",
+    "merchant": {
+      "name": "Uber",
+      "country": "GB",
+      "mcc": "4121"
+    },
+    "currency": "GBP",
+    "amount": 45,
+    "lines": [
+      {
+        "id": "card-uk-002-line-1",
+        "netAmount": 45
+      }
+    ]
+  },
+  {
+    "id": "card-us-001",
+    "companyEntityId": "entity-us-001",
+    "merchant": {
+      "name": "Salesforce",
+      "country": "US",
+      "mcc": "5734"
+    },
+    "currency": "USD",
+    "amount": 8900,
+    "lines": [
+      {
+        "id": "card-us-001-line-1",
+        "accountId": "acc-us-6000",
+        "taxCodeId": "tax-us-sales-8",
+        "costCenterId": "cc-engineering",
+        "description": "Monthly SaaS subscription",
+        "netAmount": 8900
+      }
+    ]
+  },
+  {
+    "id": "card-de-001",
+    "companyEntityId": "entity-de-001",
+    "merchant": {
+      "name": "Lufthansa",
+      "country": "DE",
+      "mcc": "3000"
+    },
+    "currency": "EUR",
+    "amount": 850,
+    "lines": [
+      {
+        "id": "card-de-001-line-1",
+        "netAmount": 850
+      }
+    ]
+  }
+]

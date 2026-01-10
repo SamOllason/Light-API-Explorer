@@ -44,10 +44,11 @@ const DOC_TYPES: readonly DocumentType[] = ['AP', 'AR', 'CT', 'JE'];
 const CURRENCIES = ['USD', 'EUR', 'GBP', 'JPY', 'CAD', 'AUD', 'CHF'] as const;
 
 
-// Paws & Play scenario: realistic vendors and products
+// Professional B2B vendors for realistic invoice payables
 const COMPANY_PREFIXES = [
-  'Acme Pet Distributors',
-  'BarkBox Wholesale',
+  'Acme Software Solutions',
+  'Global Consulting Partners',
+  'TechVendor Inc',
   'Global Treats Ltd.',
   'Paws & Play',
   'Happy Tails Supply',

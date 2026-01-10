@@ -1,0 +1,45 @@
+[
+  {
+    "id": "ledger-line-001",
+    "companyEntityId": "entity-uk-001",
+    "documentType": "AR",
+    "documentNumber": "INV-00123",
+    "postingDate": "2026-01-15",
+    "amounts": {
+      "localCurrency": "GBP",
+      "localAmount": 12000,
+      "groupCurrency": "USD",
+      "groupAmount": 15600
+    },
+    "linkedInvoiceId": "ar-uk-003",
+    "description": "Sales invoice to Acme Corp"
+  },
+  {
+    "id": "ledger-line-002",
+    "companyEntityId": "entity-us-001",
+    "documentType": "AP",
+    "documentNumber": "BILL-00456",
+    "postingDate": "2026-01-12",
+    "amounts": {
+      "localCurrency": "USD",
+      "localAmount": 5400,
+      "groupCurrency": "USD",
+      "groupAmount": 5400
+    },
+    "linkedInvoiceId": "ap-us-002",
+    "description": "Office supplies from Staples"
+  },
+  {
+    "id": "ledger-line-003",
+    "companyEntityId": "entity-de-001",
+    "documentType": "CARD",
+    "postingDate": "2026-01-18",
+    "amounts": {
+      "localCurrency": "EUR",
+      "localAmount": 850,
+      "groupCurrency": "USD",
+      "groupAmount": 935
+    },
+    "description": "Business travel expenses"
+  }
+]

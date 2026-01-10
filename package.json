@@ -8,7 +8,9 @@
   ],
   "scripts": {
     "dev:demo": "pnpm --filter @light-faux/demo dev",
-    "build": "pnpm --filter @light-faux/sdk build",
+    "build": "pnpm -r build",
+    "build:sdk": "pnpm --filter @light-faux/sdk build",
+    "build:mock": "pnpm --filter @light-demo/mock-sdk build",
     "typecheck": "pnpm -r typecheck"
   },
   "engines": {

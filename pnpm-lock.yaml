@@ -10,6 +10,9 @@ importers:
 
   apps/demo:
     dependencies:
+      '@light-demo/mock-sdk':
+        specifier: workspace:*
+        version: link:../../packages/mock-sdk
       '@light-faux/sdk':
         specifier: workspace:*
         version: link:../../packages/sdk
@@ -41,6 +44,12 @@ importers:
       tailwindcss:
         specifier: ^3.4.1
         version: 3.4.19
+      typescript:
+        specifier: ^5.3.3
+        version: 5.9.3
+
+  packages/mock-sdk:
+    devDependencies:
       typescript:
         specifier: ^5.3.3
         version: 5.9.3
