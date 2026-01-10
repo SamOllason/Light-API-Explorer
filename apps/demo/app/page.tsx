@@ -69,18 +69,22 @@ export default function CloseReadinessPage() {
               <p className="text-sm text-gray-600 mt-1.5 font-medium">
                 January 2026 — Track blockers and take action across all entities
               </p>
-              <p className="text-xs text-gray-500 mt-2 flex items-center gap-1.5">
-                <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary-500 animate-pulse"></span>
-                � Prototype — Turns "Are we ready to close?" from a 30-minute hunt into a 10-second answer. Demo uses mocked data.{' '}
-                <a
-                  href="https://github.com/samollason/light-faux-sdk"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-primary-600 hover:text-primary-700 underline font-medium"
-                >
-                  View README
-                </a>
-              </p>
+              <div className="mt-3 p-3 bg-blue-50 border-l-4 border-blue-400 rounded-r-lg">
+                <p className="text-xs text-blue-900 leading-relaxed">
+                  <strong className="font-bold">💡 Why This Exists:</strong> Finance teams waste hours chasing blockers before month-end close. 
+                  This prototype turns "Are we ready to close?" from a 30-minute hunt into a 10-second answer.{' '}
+                  <span className="block mt-1 italic">Prototype demo with mocked data —{' '}
+                  <a
+                    href="https://github.com/samollason/light-faux-sdk"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-700 hover:text-blue-900 underline font-semibold"
+                  >
+                    View README
+                  </a>
+                  </span>
+                </p>
+              </div>
             </div>
             <a
               href="/ledger"
@@ -517,7 +521,20 @@ function BlockersDrawer({
               {/* AR Drafts */}
               {arInvoices.length > 0 && (
                 <section>
-                  <h3 className="text-sm font-semibold text-gray-700 mb-3">AR Draft Invoices ({arInvoices.length})</h3>
+                  <div className="flex items-center gap-2 mb-3">
+                    <h3 className="text-sm font-semibold text-gray-700">AR Draft Invoices ({arInvoices.length})</h3>
+                    <div className="group relative flex items-center">
+                      <div className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center hover:bg-blue-200 cursor-help transition-colors">
+                        <svg className="w-3.5 h-3.5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <div className="absolute left-7 top-0 w-72 p-3 bg-gray-900 text-white text-xs rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 pointer-events-none">
+                        <strong className="block mb-1 text-blue-300">What are AR Drafts?</strong>
+                        Accounts Receivable (AR) invoices in "draft" state haven't been finalized yet. They can still be edited and don't show up in financial reports. "Open" them to assign invoice numbers and lock them for payment.
+                      </div>
+                    </div>
+                  </div>
                   <div className="space-y-2">
                     {arInvoices.map((inv) => (
                       <div key={inv.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
@@ -543,7 +560,20 @@ function BlockersDrawer({
               {/* AP INIT */}
               {apPayables.length > 0 && (
                 <section>
-                  <h3 className="text-sm font-semibold text-gray-700 mb-3">AP Bills Awaiting Approval ({apPayables.length})</h3>
+                  <div className="flex items-center gap-2 mb-3">
+                    <h3 className="text-sm font-semibold text-gray-700">AP Bills Awaiting Approval ({apPayables.length})</h3>
+                    <div className="group relative flex items-center">
+                      <div className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center hover:bg-blue-200 cursor-help transition-colors">
+                        <svg className="w-3.5 h-3.5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <div className="absolute left-7 top-0 w-72 p-3 bg-gray-900 text-white text-xs rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 pointer-events-none">
+                        <strong className="block mb-1 text-blue-300">What are AP Bills?</strong>
+                        Accounts Payable (AP) are bills you owe to vendors. Bills in "INIT" state need approval before they can be paid. Approving them commits you to the liability and affects cash flow forecasts.
+                      </div>
+                    </div>
+                  </div>
                   <div className="space-y-2">
                     {apPayables.map((payable) => (
                       <div key={payable.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
@@ -569,7 +599,20 @@ function BlockersDrawer({
               {/* Cards Unclassified */}
               {cardTransactions.length > 0 && (
                 <section>
-                  <h3 className="text-sm font-semibold text-gray-700 mb-3">Card Transactions Unclassified ({cardTransactions.length})</h3>
+                  <div className="flex items-center gap-2 mb-3">
+                    <h3 className="text-sm font-semibold text-gray-700">Card Transactions Unclassified ({cardTransactions.length})</h3>
+                    <div className="group relative flex items-center">
+                      <div className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center hover:bg-blue-200 cursor-help transition-colors">
+                        <svg className="w-3.5 h-3.5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <div className="absolute left-7 top-0 w-72 p-3 bg-gray-900 text-white text-xs rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 pointer-events-none">
+                        <strong className="block mb-1 text-blue-300">What does "Classify" mean?</strong>
+                        Assign this spend to an expense category (e.g., "Travel", "Software", "Meals") and tax code. Unclassified transactions can't be included in financial reports.
+                      </div>
+                    </div>
+                  </div>
                   <div className="space-y-2">
                     {cardTransactions.map((tx) => (
                       <div key={tx.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
@@ -595,7 +638,20 @@ function BlockersDrawer({
               {/* FX Flags */}
               {ledgerAccounts.length > 0 && (
                 <section>
-                  <h3 className="text-sm font-semibold text-gray-700 mb-3">FX Revaluation Needed ({ledgerAccounts.length})</h3>
+                  <div className="flex items-center gap-2 mb-3">
+                    <h3 className="text-sm font-semibold text-gray-700">FX Revaluation Needed ({ledgerAccounts.length})</h3>
+                    <div className="group relative flex items-center">
+                      <div className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center hover:bg-blue-200 cursor-help transition-colors">
+                        <svg className="w-3.5 h-3.5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                      <div className="absolute left-7 top-0 w-72 p-3 bg-gray-900 text-white text-xs rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 pointer-events-none">
+                        <strong className="block mb-1 text-blue-300">What is FX Revaluation?</strong>
+                        Foreign exchange (FX) revaluation updates bank account balances when currency rates change. For multinationals, this ensures accurate financial statements and prevents material misstatements.
+                      </div>
+                    </div>
+                  </div>
                   <div className="space-y-2">
                     {ledgerAccounts.map((acc) => (
                       <div key={acc.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">

@@ -33,22 +33,32 @@ export default function LedgerPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50/30 to-gray-50">
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Header */}
-        <header className="mb-8 border-b border-gray-200 pb-6">
+        <header className="mb-8 border-b border-gray-200/60 pb-6 backdrop-blur-sm">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-semibold text-gray-900">Ledger Lens</h1>
-              <p className="text-sm text-gray-600 mt-1">
+              <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Ledger Lens</h1>
+              <p className="text-sm text-gray-600 mt-1.5 font-medium">
                 General ledger transaction lines — click any row to explain the posting
               </p>
+              <div className="mt-3 p-3 bg-blue-50 border-l-4 border-blue-400 rounded-r-lg">
+                <p className="text-xs text-blue-900 leading-relaxed">
+                  <strong className="font-bold">💡 Why This Exists:</strong> Engineers rarely understand double-entry bookkeeping. 
+                  This "Explain Posting" feature shows the full audit trail (GL → Invoice → Product defaults) in plain English. 
+                  <span className="block mt-1 italic">Prototype demo — not in Light's current product. Built to demonstrate finance literacy + educational UX thinking.</span>
+                </p>
+              </div>
             </div>
             <a
               href="/"
-              className="text-sm text-primary-600 hover:text-primary-700 font-medium"
+              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-primary-700 bg-primary-50 hover:bg-primary-100 rounded-lg border border-primary-200 transition-all duration-200 hover:shadow-sm"
             >
-              ← Back to Readiness
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+              Back to Readiness
             </a>
           </div>
         </header>
